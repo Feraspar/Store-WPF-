@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="LocalFolder\**" />
+    <EmbeddedResource Remove="LocalFolder\**" />
+    <None Remove="LocalFolder\**" />
+    <Page Remove="LocalFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
