@@ -18,7 +18,7 @@ namespace MyStore
     {
         public MainWindow()
         {
-            InitializeComponent();
+
         }
     }
 }

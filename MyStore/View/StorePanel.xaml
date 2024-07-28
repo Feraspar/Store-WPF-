@@ -52,7 +52,7 @@
                             </GridViewColumn.HeaderTemplate>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="В корзину" FontSize="15" Background="#FFBFDCF5" Margin="20, 0, 0 , 0"/>
+                                    <Button Content="В корзину" Command="{Binding DataContext.AddToCartCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}" FontSize="15" Background="#FFBFDCF5" Margin="20, 0, 0 , 0"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
