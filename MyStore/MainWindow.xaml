@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MyStore"
         xmlns:vm="clr-namespace:MyStore.ViewModel"
         mc:Ignorable="d"
-        Background="#C5C6C7"
+        Background="#FFA2C8DC"
         Title="Магазин товаров" Height="450" Width="800">
 
     <Window.DataContext>
@@ -21,8 +21,8 @@
 
         <Grid>
             <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
-                <Button Content="Товары" FontSize="15" Margin="10" Command="{Binding StorePageCommand}" Background="#C5C6C7" BorderThickness="0"/>
-                <Button Content="Корзина" FontSize="15" Margin="10" Command="{Binding CartPageCommand}" Background="#C5C6C7" BorderThickness="0"/>
+                <Button Content="Товары" FontSize="15" Margin="10" Command="{Binding StorePageCommand}" Background="#FFA2C8DC" BorderThickness="0"/>
+                <Button Content="Корзина" FontSize="15" Margin="10" Command="{Binding CartPageCommand}" Background="#FFA2C8DC" BorderThickness="0"/>
             </StackPanel>
         </Grid>
 

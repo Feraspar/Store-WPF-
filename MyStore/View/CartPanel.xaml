@@ -6,10 +6,41 @@
              xmlns:local="clr-namespace:MyStore.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProductTemplate">
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="5">
+                <StackPanel Width="200">
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                    <TextBlock Text="{Binding Price, StringFormat={}{0:C}}" Margin="0,0,0,10"/>
+                    <Button Content="Удалить" Width="Auto"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
         <Grid>
-            <Border Background="#1F2833" CornerRadius="25, 0, 0, 25"/>
-            <TextBlock Text="Здесь будет корзина" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF66FCF1"/>
+            <Border Background="AntiqueWhite" BorderBrush="#FF6B6B6B" BorderThickness="0, 0, 0, 1">
+                <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="Количество продуктов" Margin="0, 0, 20, 0" FontSize="18"/>
+                    <TextBlock Text="Общая стоимость" FontSize="18"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ListView ItemsSource="{Binding Products}" ItemTemplate="{StaticResource ProductTemplate}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
         </Grid>
     </Grid>
 </UserControl>
