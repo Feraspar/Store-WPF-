@@ -30,14 +30,13 @@ namespace MyStore.ViewModel
 
         private int _productsCount;
         private decimal _productsFullPrice;
-        private const string _pathToCartJson = @"ApplicationData.Current.LocalFolder\Cart.json";
+        private const string _pathToCartJson = @"Resources\Cart.json";
+        private string _fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
         public CartViewModel() 
         {
-            string fullPathToCart = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToCartJson);
-
             DeleteProductCommand = new RelayCommand<Product>(DeleteProduct);
             ProductsInCart = new ObservableCollection<Product>();
-            LoadCart(fullPathToCart);
+            LoadCart(_fullPathToCart);
         }
 
         private void GetCountAndFullPriceCart()
@@ -74,15 +73,14 @@ namespace MyStore.ViewModel
             {
                 ProductsInCart.Remove(product);
             }
+
             await SaveCart();
             GetCountAndFullPriceCart();
         }
         private async Task SaveCart()
         {
-            string fullPathToCart = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToCartJson);
-
             string cartJsonString = JsonConvert.SerializeObject(ProductsInCart, Formatting.Indented);
-            await File.WriteAllTextAsync(fullPathToCart, cartJsonString);
+            await File.WriteAllTextAsync(_fullPathToCart, cartJsonString);
         }
     }
 }
