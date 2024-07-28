@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MyStore.Model;
-using Newtonsoft.Json;
+using MyStore.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,12 +28,17 @@ namespace MyStore.ViewModel
             set => SetProperty(ref _productsFullPrice, value);
         }
 
+        private JsonService _jsonService;
+
         private int _productsCount;
         private decimal _productsFullPrice;
-        private const string _pathToCartJson = @"Resources\Cart.json";
-        private string _fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
+        private const string _pathToCartJson = @"LocalFiles\Cart.json";
+        private string _fullPathToCart;
         public CartViewModel() 
         {
+            //_fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
+            _fullPathToCart = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToCartJson);
+            _jsonService = new JsonService();
             DeleteProductCommand = new RelayCommand<Product>(DeleteProduct);
             ProductsInCart = new ObservableCollection<Product>();
             LoadCart(_fullPathToCart);
@@ -54,8 +59,7 @@ namespace MyStore.ViewModel
 
         private async void LoadCart(string pathToCart)
         {
-            string cartJsonString = await File.ReadAllTextAsync(pathToCart);
-            var productsInCart = JsonConvert.DeserializeObject<List<Product>>(cartJsonString);
+            List<Product> productsInCart = await _jsonService.LoadProducts(pathToCart);
 
             if (productsInCart != null)
             {
@@ -79,8 +83,7 @@ namespace MyStore.ViewModel
         }
         private async Task SaveCart()
         {
-            string cartJsonString = JsonConvert.SerializeObject(ProductsInCart, Formatting.Indented);
-            await File.WriteAllTextAsync(_fullPathToCart, cartJsonString);
+            await _jsonService.SaveProducts(_fullPathToCart, ProductsInCart.ToList());
         }
     }
 }
