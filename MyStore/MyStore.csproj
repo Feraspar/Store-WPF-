@@ -9,9 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="View\" />
-    <Folder Include="ViewModel\" />
+    <Compile Remove="LocalFolder\**" />
+    <EmbeddedResource Remove="LocalFolder\**" />
+    <None Remove="LocalFolder\**" />
+    <Page Remove="LocalFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
