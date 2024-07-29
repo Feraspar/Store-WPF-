@@ -19,6 +19,7 @@
                     <StackPanel>
                         <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" HorizontalAlignment="Left"/>
                         <TextBlock Text="{Binding Price, StringFormat={}{0:C}}" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{Binding Counter}" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" HorizontalAlignment="Left"/>
                     </StackPanel>
                     <Button Content="Удалить" Command="{Binding DataContext.DeleteProductCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}" HorizontalAlignment="Right" Background="#FFFD6161"/>
                 </Grid>

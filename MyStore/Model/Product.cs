@@ -38,9 +38,22 @@ namespace MyStore.Model
                 }
             }
         }
+        public int Counter
+        {
+            get => _counter;
+            set
+            {
+                if (_counter != value)
+                {
+                    _counter = value;
+                    OnPropertyChanged(nameof(Counter));
+                }
+            }
+        }
 
         private string _name;
         private decimal _price;
+        private int _counter = 1;
 
         protected void OnPropertyChanged(string propertyName)
         {

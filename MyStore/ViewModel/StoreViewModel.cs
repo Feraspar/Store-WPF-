@@ -63,10 +63,25 @@ namespace MyStore.ViewModel
 
         private async void AddToCart(Product product)
         {
-            ProductsInCart.Add(product);
-            await SaveCart();
+            if (product != null)
+            {
+                Product existingItem = ProductsInCart.FirstOrDefault(n => n.Id == product.Id);
+                if (existingItem != null)
+                {
+                    existingItem.Counter++;
+                    existingItem.Price = product.Price*2;
+                    await SaveCart();
 
-            MessageBox.Show($"{product.Name} добавлен в корзину");
+                    MessageBox.Show($"{product.Name} добавлен в корзину");
+                }
+                else
+                {
+                    ProductsInCart.Add(product);
+                    await SaveCart();
+
+                    MessageBox.Show($"{product.Name} добавлен в корзину");
+                }
+            }
         }
 
         private async Task SaveCart()

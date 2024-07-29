@@ -47,13 +47,15 @@ namespace MyStore.ViewModel
         private void GetCountAndFullPriceCart()
         {
             decimal fullPrice = 0;
+            int countProducts = 0;
 
             foreach (var product in ProductsInCart)
             {
                 fullPrice += product.Price;
+                countProducts += product.Counter;
             }
 
-            ProductsCount = ProductsInCart.Count;
+            ProductsCount = countProducts;
             ProductsFullPrice = fullPrice;
         }
 
