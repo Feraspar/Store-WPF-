@@ -77,7 +77,13 @@ namespace MyStore.ViewModel
         {
             if (product != null)
             {
-                ProductsInCart.Remove(product);
+                if (product.Counter != 1)
+                {
+                    product.Counter--;
+                    product.Price /= 2;
+                }
+                else
+                    ProductsInCart.Remove(product);
             }
 
             await SaveCart();
