@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Smartphone",
+    "price": 699.99
+  },
+  {
+    "id": 2,
+    "name": "Laptop",
+    "price": 999.99
+  },
+  {
+    "id": 3,
+    "name": "Tablet",
+    "price": 499.99
+  },
+  {
+    "id": 4,
+    "name": "Smartwatch",
+    "price": 199.99
+  },
+  {
+    "id": 5,
+    "name": "Bluetooth Speaker",
+    "price": 149.99
+  },
+  {
+    "id": 6,
+    "name": "Wireless Earbuds",
+    "price": 129.99
+  },
+  {
+    "id": 7,
+    "name": "Smart TV",
+    "price": 799.99
+  },
+  {
+    "id": 8,
+    "name": "Gaming Console",
+    "price": 499.99
+  },
+  {
+    "id": 9,
+    "name": "Smart Home Hub",
+    "price": 99.99
+  },
+  {
+    "id": 10,
+    "name": "Digital Camera",
+    "price": 599.99
+  },
+  {
+    "id": 11,
+    "name": "E-Reader",
+    "price": 129.99
+  },
+  {
+    "id": 12,
+    "name": "Portable Charger",
+    "price": 49.99
+  },
+  {
+    "id": 13,
+    "name": "Smart Thermostat",
+    "price": 249.99
+  },
+  {
+    "id": 14,
+    "name": "VR Headset",
+    "price": 299.99
+  },
+  {
+    "id": 15,
+    "name": "Drone",
+    "price": 899.99
+  },
+  {
+    "id": 16,
+    "name": "Smart Light Bulb",
+    "price": 19.99
+  },
+  {
+    "id": 17,
+    "name": "Action Camera",
+    "price": 399.99
+  },
+  {
+    "id": 18,
+    "name": "Smart Lock",
+    "price": 179.99
+  },
+  {
+    "id": 19,
+    "name": "Robot Vacuum",
+    "price": 499.99
+  },
+  {
+    "id": 20,
+    "name": "Electric Toothbrush",
+    "price": 99.99
+  }
+]
