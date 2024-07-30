@@ -28,10 +28,10 @@ namespace MyStore.ViewModel
         private readonly string _fullPathToCart;
         public StoreViewModel() 
         {
-            //_fullPathToProducts = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToProductsJson);
-            //_fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
-            _fullPathToCart = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToCartJson);
-            _fullPathToProducts = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToProductsJson);
+            _fullPathToProducts = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToProductsJson);
+            _fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
+            //_fullPathToCart = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToCartJson);
+            //_fullPathToProducts = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToProductsJson);
             _jsonService = new JsonService();
             Products = new ObservableCollection<Product>();
             ProductsInCart = new ObservableCollection<Product>();
@@ -69,7 +69,6 @@ namespace MyStore.ViewModel
                 if (existingItem != null)
                 {
                     existingItem.Counter++;
-                    existingItem.Price = product.Price*2;
                     await SaveCart();
 
                     MessageBox.Show($"{product.Name} добавлен в корзину");

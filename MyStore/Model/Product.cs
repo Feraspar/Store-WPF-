@@ -13,7 +13,6 @@ namespace MyStore.Model
     public class Product : INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
         public string Name
         {
             get => _name;
@@ -47,12 +46,20 @@ namespace MyStore.Model
                 {
                     _counter = value;
                     OnPropertyChanged(nameof(Counter));
+                    OnPropertyChanged(nameof(TotalPrice));
                 }
             }
         }
+        public decimal TotalPrice
+        {
+            get => Price * Counter;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private string _name;
         private decimal _price;
+        private decimal _totalPrice;
         private int _counter = 1;
 
         protected void OnPropertyChanged(string propertyName)
