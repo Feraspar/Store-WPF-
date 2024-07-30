@@ -9,9 +9,12 @@ using System.Threading.Tasks;
 
 namespace MyStore.Services
 {
+    /// <summary>
+    /// Класс для преобразования json строки в список объектов и сохранения списка продуктов в json строку
+    /// </summary>
     public class JsonService
     {
-        public async Task<List<Product>> LoadProducts(string path)
+        public async Task<List<Product>> LoadProducts(string path)  // Получение списка продуктов из json строки
         {
             if (!File.Exists(path))
             {
@@ -22,7 +25,7 @@ namespace MyStore.Services
             return products;
         }
 
-        public async Task SaveProducts(string path, List<Product> products)
+        public async Task SaveProducts(string path, List<Product> products)     // Сохранение списка продуктов в json строку
         {
             string jsonString = JsonConvert.SerializeObject(products, Formatting.Indented);
             await File.WriteAllTextAsync(path, jsonString);
