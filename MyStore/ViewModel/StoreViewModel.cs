@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MyStore.Model;
-using Newtonsoft.Json;
+using MyStore.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,12 +20,19 @@ namespace MyStore.ViewModel
         public ObservableCollection<Product> ProductsInCart { get; private set; }
         public ICommand AddToCartCommand { get; private set; }
 
-        private const string _pathToProductsJson = @"Resources\Products.json";
-        private const string _pathToCartJson = @"Resources\Cart.json";
-        private string _fullPathToProducts = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToProductsJson);
-        private string _fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
+        private JsonService _jsonService;
+
+        private const string _pathToProductsJson = @"LocalFiles\Products.json";
+        private const string _pathToCartJson = @"LocalFiles\Cart.json";
+        private readonly string _fullPathToProducts;
+        private readonly string _fullPathToCart;
         public StoreViewModel() 
         {
+            _fullPathToProducts = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToProductsJson);
+            _fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
+            //_fullPathToCart = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToCartJson);
+            //_fullPathToProducts = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToProductsJson);
+            _jsonService = new JsonService();
             Products = new ObservableCollection<Product>();
             ProductsInCart = new ObservableCollection<Product>();
             AddToCartCommand = new RelayCommand<Product>(AddToCart);
@@ -35,11 +42,8 @@ namespace MyStore.ViewModel
 
         private async void LoadProducts(string pathToProducts, string pathToCart)
         {
-            string productsJsonString = await File.ReadAllTextAsync(pathToProducts);
-            string cartJsonString = await File.ReadAllTextAsync(pathToCart);
-
-            var products = JsonConvert.DeserializeObject<List<Product>>(productsJsonString);
-            var productsInCart = JsonConvert.DeserializeObject<List<Product>>(cartJsonString);
+            List<Product> products = await _jsonService.LoadProducts(pathToProducts);
+            List<Product> productsInCart = await _jsonService.LoadProducts(pathToCart);
 
             if (products != null)
             {
@@ -59,16 +63,29 @@ namespace MyStore.ViewModel
 
         private async void AddToCart(Product product)
         {
-            ProductsInCart.Add(product);
-            await SaveCart();
+            if (product != null)
+            {
+                Product existingItem = ProductsInCart.FirstOrDefault(n => n.Id == product.Id);
+                if (existingItem != null)
+                {
+                    existingItem.Counter++;
+                    await SaveCart();
 
-            MessageBox.Show($"{product.Name} добавлен в корзину");
+                    MessageBox.Show($"{product.Name} добавлен в корзину");
+                }
+                else
+                {
+                    ProductsInCart.Add(product);
+                    await SaveCart();
+
+                    MessageBox.Show($"{product.Name} добавлен в корзину");
+                }
+            }
         }
 
         private async Task SaveCart()
         {
-            string jsonString = JsonConvert.SerializeObject(ProductsInCart, Formatting.Indented);
-            await File.WriteAllTextAsync(_fullPathToCart, jsonString);
+            await _jsonService.SaveProducts(_fullPathToCart, ProductsInCart.ToList());
         }
     }
 }
