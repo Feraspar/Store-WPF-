@@ -55,14 +55,14 @@ namespace MyStore.Model
             get => Price * Counter;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;   // Событие, оповещающее об изменении свойств
 
         private string _name;
         private decimal _price;
         private decimal _totalPrice;
         private int _counter = 1;
 
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName)   
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

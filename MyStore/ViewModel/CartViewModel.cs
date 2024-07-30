@@ -13,10 +13,13 @@ using System.Windows.Input;
 
 namespace MyStore.ViewModel
 {
+    /// <summary>
+    /// ViewModel для панели корзины, содержит реализацию сортировки, отображения товаров в корзине и общей стоимости/количества
+    /// </summary>
     public class CartViewModel : ObservableObject
     {
-        public ObservableCollection<Product> ProductsInCart { get; private set; }
-        public ObservableCollection<string> SortOptions { get; private set; }
+        public ObservableCollection<Product> ProductsInCart { get; private set; }   // Коллекция продуктов в корзине
+        public ObservableCollection<string> SortOptions { get; private set; }   // Коллекция значений для ComboBox
         public ICommand DeleteProductCommand { get; private set; }
         public int ProductsCount
         {
@@ -40,21 +43,21 @@ namespace MyStore.ViewModel
                 }
             }
         }
-        public decimal TotalPrice => ProductsInCart.Sum(p => p.Price * p.Counter);
 
         private JsonService _jsonService;
 
         private int _productsCount;
         private decimal _productsFullPrice;
         private string _selectedSortOption;
-        private const string _pathToCartJson = @"LocalFiles\Cart.json";
+        private const string _pathToCartJson = @"LocalFiles\Cart.json";     // Относительный путь к json строке корзины
         private string _fullPathToCart;
         public CartViewModel() 
         {
-            _fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);
+            _fullPathToCart = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _pathToCartJson);       // Создание полного пути из относительного
             //_fullPathToCart = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _pathToCartJson);
+
             _jsonService = new JsonService();
-            DeleteProductCommand = new RelayCommand<Product>(DeleteProduct);
+            DeleteProductCommand = new RelayCommand<Product>(DeleteProduct);    // Команда для удаления товара из корзины
             ProductsInCart = new ObservableCollection<Product>();
             SortOptions = new ObservableCollection<string>
             {
@@ -66,7 +69,7 @@ namespace MyStore.ViewModel
             LoadCart(_fullPathToCart);
         }
 
-        private void GetCountAndFullPriceCart()
+        private void GetCountAndFullPriceCart()     // Метод получения общего количества и стоимости товаров в корзине
         {
             decimal fullPrice = 0;
             int countProducts = 0;
@@ -81,7 +84,7 @@ namespace MyStore.ViewModel
             ProductsFullPrice = fullPrice;
         }
 
-        private async void LoadCart(string pathToCart)
+        private async void LoadCart(string pathToCart)      // Асинхронная загрузка товаров из json строки корзины
         {
             List<Product> productsInCart = await _jsonService.LoadProducts(pathToCart);
 
@@ -96,7 +99,7 @@ namespace MyStore.ViewModel
             LoadSortProps();
             GetCountAndFullPriceCart();
         }
-        private async void DeleteProduct(Product product)
+        private async void DeleteProduct(Product product)       // Метод удаления товара из корзины
         {
             if (product != null)
             {
@@ -112,11 +115,11 @@ namespace MyStore.ViewModel
             SortCart();
             GetCountAndFullPriceCart();
         }
-        private async Task SaveCart()
+        private async Task SaveCart()       // Метод сохранения корзины
         {
             await _jsonService.SaveProducts(_fullPathToCart, ProductsInCart.ToList());
         }
-        private void SortCart()
+        private void SortCart()     // Метод сортировки товаров в корзине
         {
             List<Product> sortedProducts;
 
@@ -142,12 +145,12 @@ namespace MyStore.ViewModel
                 ProductsInCart.Add(item);
             }
         }
-        private void LoadSortProps()
+        private void LoadSortProps()        // Метод загрузки установленного значения сортировки из Properties
         {
             if (Properties.Settings.Default.SelectedSortOption != null)
                 SelectedSortOption = Properties.Settings.Default.SelectedSortOption;
         }
-        private void SaveSortProps()
+        private void SaveSortProps()        // Метод сохранения установленного значения сортировки из Properties
         {
             Properties.Settings.Default.SelectedSortOption = SelectedSortOption;
             Properties.Settings.Default.Save();
